@@ -2,8 +2,8 @@ require 'formula'
 
 class Idris < Formula
   homepage 'www.idris-lang.org'
-  url 'https://github.com/jroesch/Idris-dev/archive/0.9.9.3.tar.gz'
-  sha1 '19f5ff7d1e78da6cd722f1c883a4cd807d2db8b5'
+  url 'https://github.com/jroesch/Idris-dev/archive/0.9.10.1.tar.gz'
+  sha1 '2d426d081d37292c6432bd6c68041b2ad1963b68'
 
   depends_on 'llvm' => if_gcc ? ["-use-gcc"] : []
   depends_on 'boehmgc'
