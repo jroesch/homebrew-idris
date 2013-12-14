@@ -5,6 +5,14 @@ class Idris < Formula
   url 'https://github.com/jroesch/Idris-dev/archive/v0.9.10.1.tar.gz'
   sha1 '2d426d081d37292c6432bd6c68041b2ad1963b68'
 
+  ghc_info = eval(`ghc --info`.gsub("(", "[").gsub(")", "]").gsub("\n", " "))
+  cc = if ghc_info[2][1] =~ /gcc/
+    "--cc=gcc-4.2"
+  else
+    "--cc=clang"
+  end
+
+  depends_on 'apple-gcc42'
   depends_on 'llvm' => cc
   depends_on 'boehmgc'
   depends_on 'libffi'
@@ -12,15 +20,6 @@ class Idris < Formula
   depends_on 'pkg-config'
   depends_on 'ghc'
   depends_on 'cabal-install'
-
-  def cc
-    ghc_info = eval(`ghc --info`.gsub("(", "[").gsub(")", "]").gsub("\n", " "))
-    if ghc_info[2][1] =~ /gcc/
-      "--cc=gcc-4.2"
-    else
-      "--cc=clang"
-    end
-  end
 
   def install
     # Compute number of cores
@@ -32,6 +31,7 @@ class Idris < Formula
     # Install
     system 'cabal update'
     system 'cabal install alex' if `which alex` !~ /.*\/alex/
+    system 'cabal sandbox init'
     system 'make'
   end
 
