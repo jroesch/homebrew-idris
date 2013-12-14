@@ -11,14 +11,6 @@ class Idris < Formula
   depends_on 'libffi'
   depends_on 'ghc'
   depends_on 'cabal-install'
-
-  # ghc_info = eval(`ghc --info`.gsub("(", "[").gsub(")", "]").gsub("\n", " "))
-  # cc = if ghc_info[2][1] =~ /gcc/
-  #   "--cc=gcc-4.2"
-  # else
-  #   "--cc=clang"
-  # end
-
   depends_on 'llvm' => "--cc=gcc-4.2"
   depends_on 'boehmgc'
   depends_on 'pkg-config'
