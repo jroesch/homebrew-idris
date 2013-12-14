@@ -15,6 +15,7 @@ class IdrisLang < Formula
 
   def install
     system 'cabal install alex' if `which alex` =~ /alex/
+    system 'cabal update'
     system 'make'
   end
 
