@@ -14,14 +14,16 @@ class Idris < Formula
   depends_on 'cabal-install'
 
   def install
+    # Compute number of cores
+    count = `sysctl hw.ncpu | awk '{print $2}'`
+    # Write out build options
+    custom = open("custom.mk", "w")
+    custom.write("CABALFLAGS += -f LLVM -f FFI -j#{count}")
+    custom.close
+    # Install
     system 'cabal update'
     system 'cabal install alex' if `which alex` =~ /alex/
     system 'make'
-  end
-
-  def if_gcc
-    ghc_info = eval(`ghc --info`.gsub("(", "[").gsub(")", "]").gsub("\n", " "))
-    ghc_info[2][1] =~ /gcc/
   end
 
   test do
